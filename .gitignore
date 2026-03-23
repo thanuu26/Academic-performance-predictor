@@ -1,0 +1,14 @@
+# Python environment and cache
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Django database (Do not upload real student data to public repos!)
+db.sqlite3
+
+# Trained ML Models (Optional: Some people exclude these if they are huge, but yours is small enough to keep)
+# student_model.pkl 
+
+# OS generated files
+.DS_Store

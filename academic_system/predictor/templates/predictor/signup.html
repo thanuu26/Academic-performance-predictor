@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - Academic Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #4F46E5; --bg: #F3F4F6; --card: #FFFFFF; --text: #111827; --input: #F9FAFB; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: var(--card); width: 100%; max-width: 400px; padding: 40px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); box-sizing: border-box; }
+        h2 { text-align: center; margin: 0 0 5px 0; color: var(--text); }
+        p { text-align: center; color: #6B7280; font-size: 14px; margin-bottom: 25px;}
+        .role-toggle { display: flex; background: #F3F4F6; border-radius: 12px; padding: 4px; margin-bottom: 25px; }
+        .role-btn { flex: 1; padding: 12px; text-align: center; border: none; background: transparent; border-radius: 10px; font-size: 14px; font-weight: 600; color: #6B7280; cursor: pointer; transition: all 0.2s ease; }
+        .role-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        input[type="email"], input[type="password"] { width: 100%; padding: 16px; border: 1px solid transparent; border-radius: 12px; font-family: 'Inter'; background: var(--input); margin-bottom: 15px; box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--primary); background: #FFF; box-shadow: 0 0 0 4px rgba(79,70,229,0.1); }
+        button.submit-btn { width: 100%; background: var(--primary); color: white; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .error { color: #991B1B; background: #FEF2F2; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #F87171; font-size: 14px; margin-bottom: 15px; }
+        .links { text-align: center; margin-top: 20px; font-size: 14px; color: #6B7280; }
+        a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2 id="form-title">Teacher Registration</h2>
+        <p id="form-subtitle">Create your educator account</p>
+
+        <div class="role-toggle">
+            <button type="button" class="role-btn active" id="btn-teacher" onclick="switchRole('teacher')">Educator</button>
+            <button type="button" class="role-btn" id="btn-student" onclick="switchRole('student')">Student</button>
+        </div>
+
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="user_role" id="user_role" value="teacher">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Create Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+        <div class="links">Already have an account? <a href="{% url 'login' %}">Log in here</a></div>
+    </div>
+    <script>
+        function switchRole(role) {
+            document.getElementById('btn-teacher').classList.remove('active');
+            document.getElementById('btn-student').classList.remove('active');
+            document.getElementById('btn-' + role).classList.add('active');
+            document.getElementById('user_role').value = role;
+            if(role === 'teacher') {
+                document.getElementById('form-title').innerText = "Teacher Registration";
+                document.getElementById('form-subtitle').innerText = "Create your educator account";
+            } else {
+                document.getElementById('form-title').innerText = "Student Registration";
+                document.getElementById('form-subtitle').innerText = "Set up your student profile";
+            }
+        }
+    </script>
+</body>
+</html>

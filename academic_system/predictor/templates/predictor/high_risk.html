@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>High Risk Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #4F46E5; --bg: #F3F4F6; --card: #FFFFFF; --text: #111827; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 40px 20px; }
+        .container { max-width: 1000px; margin: auto; }
+        .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: white; padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: #6B7280; font-weight: 600; }
+        .card { background: #FEF2F2; padding: 30px; border-radius: 16px; border: 1px solid #F87171; }
+        table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 15px; background: white; border-radius: 8px; overflow: hidden; }
+        th { padding: 12px; border-bottom: 2px solid #E5E7EB; color: #6B7280; font-size: 13px; text-transform: uppercase; }
+        td { padding: 15px 12px; border-bottom: 1px solid #E5E7EB; font-size: 14px; }
+        .intervention-text { color: #991B1B; font-weight: 500; font-size: 13px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <h2 style="margin:0; font-size: 20px;">Educator Portal</h2>
+        <div class="nav-links">
+            <a href="{% url 'teacher_dashboard' %}">All Students</a>
+            <a href="{% url 'high_risk' %}" style="color:#991B1B;">⚠️ High Risk</a>
+            <a href="{% url 'add_student' %}">+ Add Student</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+    <div class="card">
+        <h3 style="margin-top:0; color: #991B1B;">Priority Intervention Required</h3>
+        <table>
+            <thead><tr><th>Student Email</th><th>Learning Style</th><th>Recommended Strategy</th></tr></thead>
+            <tbody>
+                {% for student in at_risk_students %}
+                <tr>
+                    <td style="font-weight: 600;">{{ student.student_name }}</td>
+                    <td>{{ student.learning_style }}</td>
+                    <td class="intervention-text">{{ student.intervention_plan }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

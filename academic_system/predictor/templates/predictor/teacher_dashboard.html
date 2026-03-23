@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Educator Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #4F46E5; --bg: #F3F4F6; --card: #FFFFFF; --text: #111827; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 40px 20px; }
+        .container { max-width: 1000px; margin: auto; }
+        .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: white; padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: #6B7280; font-weight: 600; }
+        .nav-links a.active { color: var(--primary); }
+        .card { background: var(--card); padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 15px; }
+        th { padding: 12px; border-bottom: 2px solid #E5E7EB; color: #6B7280; font-size: 13px; text-transform: uppercase; }
+        td { padding: 15px 12px; border-bottom: 1px solid #E5E7EB; font-size: 14px; }
+        .status { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .at-risk { background: #FEF2F2; color: #991B1B; }
+        .on-track { background: #F0FDF4; color: #166534; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <h2 style="margin:0; font-size: 20px;">Educator Portal</h2>
+        <div class="nav-links">
+            <a href="{% url 'teacher_dashboard' %}" class="active">All Students</a>
+            <a href="{% url 'high_risk' %}">⚠️ High Risk</a>
+            <a href="{% url 'add_student' %}">+ Add Student</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+    <div class="card">
+        <h3 style="margin-top:0;">Complete Student Roster</h3>
+        <table>
+            <thead><tr><th>Email ID</th><th>Attendance</th><th>Study Hrs</th><th>Style</th><th>Status</th></tr></thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td style="font-weight: 600;">{{ student.student_name }}</td>
+                    <td>{{ student.attendance_rate }}%</td>
+                    <td>{{ student.study_hours }}</td>
+                    <td>{{ student.learning_style }}</td>
+                    <td><span class="status {% if student.is_at_risk %}at-risk{% else %}on-track{% endif %}">{% if student.is_at_risk %}At Risk{% else %}On Track{% endif %}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
