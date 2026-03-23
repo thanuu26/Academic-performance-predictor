@@ -1,13 +1,13 @@
 {
     "builds": [{
-        "src": "academic_system/wsgi.py",
+        "src": "academic_system/academic_system/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb" }
     }],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "academic_system/wsgi.py"
+            "dest": "academic_system/academic_system/wsgi.py"
         }
     ]
 }
